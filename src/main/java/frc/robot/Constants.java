@@ -21,11 +21,6 @@ public final class Constants {
         public static final int OPERATOR_PORT = 1;
     }
 
-    public static final class DIOPorts {
-        public static final int CLAW_LASER_PORT = 0;
-        public static final int PLAYER_INDICATOR_PORT = 1;
-    }
-
     /** IDs used by the drivetrain.
         3X for turning, 4X for driving, 5X for abs encoders. */
     public static final class SwerveIDs {
@@ -49,62 +44,22 @@ public final class Constants {
 
     /** IDs used by the Arm */
     public static final class ArmIDs {
-        public static final int ROTATION_ID = 10;
-        public static final int ROTATION_FOLLOWER_ID = 15;
-        public static final int TELESCOPE_ID = 11;
-        public static final int TELESCOPE_FOLLOWER_ID = 12;
-        public static final int SLIDER_ID = 13;
+        public static final int ROTATION_ID = 7;
     }
 
     /* -------------- SUBSYTEM CONSTANTS -------------- */
 
     /** Contains the ratios for the arm */
     public static final class ArmConstants {
-        /** Desired movement in inches * TELESCOPE_RATIO = required revolutions of the motor */
-        public static final double TELESCOPE_RATIO = 8.3808246;
-        /** Desired movement in inches * SLIDER_RATIO = required revolutions of the motor */
-        public static final double SLIDER_RATIO = 4.33650762;
-        /** Desired movement in degrees * ROTATION_RATIO = required revolutions of the motor */
-        public static final double ROTATION_RATIO = .8838383838;
 
         /** Enum representing the preset arm positions */
         public enum ArmState {
-            ZERO,           // PICKUP_FLOOR, DROPOFF_LOW
-            INTERMEDIATE,
-            PICKUP_FLOOR,   // ZERO, BALANCE
-            PICKUP_HUMAN,
-            DROPOFF_MED,
-            DROPOFF_HIGH,
-            PLACE_HIGH
+            ZERO
         }
-    }
-
-    /** Constants used by the limelight */
-    public static final class LimelightConstants {
-        // LIMELIGHT DATA IS OUT OF DATE
-
-        // Limelight calculation numbers
-        public static final int LIME_HEIGHT = 39; // Height of limelight off the ground in inches
-        public static final int TARGET_HEIGHT = 104; // Height of target in inches
-        public static final double LIME_ANGLE = Math.toRadians(51); // Angle of limelight relative to the floor
-
-        // Limelight tuning numbers
-        public static final double DESIRED_TARGET_AREA = 1.5;  // Area of the target when the robot reaches the wall
-        public static final double DRIVE_K = 0.36;             // How fast to drive toward the target
-        public static final double STEER_K = 0.05;             // How quickly the robot turns toward the target
-        public static final double MAX_DRIVE = 0.5;            // Simple speed limit so we don't drive too fast
     }
 
     /** Turning a module to absolute 0 minus its offset will point it forward */
     public static final class SwerveModuleOffsets {
-        public static final double FL_OFFSET = 312;
-        public static final double FR_OFFSET = 87;
-        public static final double RL_OFFSET = 250;
-        public static final double RR_OFFSET = 198;
-    }
-
-    /** The offsets for the workhorse chassis */
-    public static final class WorkhorseSwerveModuleOffsets {
         public static final double FL_OFFSET = 120;
         public static final double FR_OFFSET = 188;
         public static final double RL_OFFSET = 253;

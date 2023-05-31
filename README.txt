@@ -1,7 +1,7 @@
-This is the code used to drive the 
-robot created by FRC team 5090. 
-All code was written for Big Bang 2023
-for the junior high team.
+This code is used to drive a modified
+version of team 5090's secondary/practice robot.
+The robot has been fitted with a small arm
+so the junior high team can compete at Big Bang 2023.
  
 -- Contributors --
 

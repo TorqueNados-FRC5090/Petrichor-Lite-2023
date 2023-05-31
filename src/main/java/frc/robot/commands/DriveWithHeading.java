@@ -20,6 +20,9 @@ public class DriveWithHeading extends CommandBase {
      * Constructs a DriveWithHeading command
      *  
      * @param drivetrain The robot's drivetrain
+     * @param translationInputX The left and right drive instruction supplier
+     * @param translationInputY The forward and backward drive instruction supplier
+     * @param headingDegrees The desired heading of the robot
     */
     public DriveWithHeading(Drivetrain drivetrain, DoubleSupplier translationInputX, DoubleSupplier translationInputY, double headingDegrees) {
         // Initialize internal variables with values passed through params

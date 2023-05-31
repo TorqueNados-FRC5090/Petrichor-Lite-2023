@@ -15,7 +15,8 @@ public class DoNothing extends CommandBase {
     private final Drivetrain drivetrain;
 
     /**
-     * Creates a new DoNothing. This command will do nothing, and end after the specified duration.
+     * Creates a new DoNothing. This command will force the drivetrain to do nothing,
+     * and end after the specified duration.
      *
      * @param seconds the time to wait, in seconds
      */
