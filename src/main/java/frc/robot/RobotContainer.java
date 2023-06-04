@@ -6,12 +6,15 @@ import static frc.robot.Constants.ArmIDs.*;
 
 // Command imports
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.ArmConstants.ArmState;
 import frc.robot.commands.AutonContainer;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.DriveWithHeading;
 import frc.robot.commands.LockDrivetrain;
+import frc.robot.commands.GoToArmPreset;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drivetrain;
 
@@ -41,29 +44,8 @@ public class RobotContainer {
             () -> driverController.getRightX())
         );
 
-        Trigger lockBtn = new Trigger(() -> driverController.getXButton());
-        lockBtn.whileTrue(new LockDrivetrain(drivetrain));
-
-        Trigger lockHeadingZeroBtn = new Trigger(() -> driverController.getRightTriggerAxis() > .2);
-        lockHeadingZeroBtn.whileTrue(
-            new DriveWithHeading(drivetrain, 
-            () -> driverController.getLeftX(), 
-            () -> driverController.getLeftY(),
-            0));
-        
-        Trigger lockHeading180Btn = new Trigger(() -> driverController.getLeftTriggerAxis() > .2);
-        lockHeading180Btn.whileTrue(
-            new DriveWithHeading(drivetrain, 
-            () -> driverController.getLeftX(), 
-            () -> driverController.getLeftY(),
-            180));
-
-        Trigger slowDriveBtn = new Trigger(() -> driverController.getLeftStickButton());
-        slowDriveBtn.whileTrue(
-            new DriveCommand(drivetrain, 
-            () -> driverController.getLeftX() * .4, 
-            () -> driverController.getLeftY() * .4,
-            () -> driverController.getRightX() * .4));
+        configureDriverBindings();
+        configureOperatorBindings();
     }
 
     /** Initialize the auton selector on the dashboard */
@@ -92,13 +74,57 @@ public class RobotContainer {
     public XboxController getOperatorController() { return operatorController; }
     public Arm getArm() {return arm;}
 
-    // For running TimedRobot style code in RobotContainer
-    /** Should always be called from Robot.teleopPeriodic() */
-    public void teleopPeriodic() {
-        if(driverController.getStartButtonPressed())
-            drivetrain.toggleFieldCentric();
-            
-        if(driverController.getBackButtonPressed())
-            drivetrain.resetHeading();
+
+    public void configureDriverBindings() {
+        /*
+         * 
+         */
+
+
+        Trigger toggleOrientationBtn = new Trigger(() -> driverController.getStartButton());
+        toggleOrientationBtn.onTrue(new InstantCommand(() -> drivetrain.toggleFieldCentric()));
+
+        Trigger resetHeadingBtn = new Trigger(() -> driverController.getBackButton());
+        resetHeadingBtn.onTrue(new InstantCommand(() -> drivetrain.resetHeading()));
+
+        Trigger lockBtn = new Trigger(() -> driverController.getXButton());
+        lockBtn.whileTrue(new LockDrivetrain(drivetrain));
+
+        Trigger lockHeadingZeroBtn = new Trigger(() -> driverController.getRightTriggerAxis() > .2);
+        lockHeadingZeroBtn.whileTrue(
+            new DriveWithHeading(drivetrain, 
+            () -> driverController.getLeftX(), 
+            () -> driverController.getLeftY(),
+            0));
+        
+        Trigger lockHeading180Btn = new Trigger(() -> driverController.getLeftTriggerAxis() > .2);
+        lockHeading180Btn.whileTrue(
+            new DriveWithHeading(drivetrain, 
+            () -> driverController.getLeftX(), 
+            () -> driverController.getLeftY(),
+            180));
+
+        Trigger slowDriveBtn = new Trigger(() -> driverController.getLeftStickButton());
+        slowDriveBtn.whileTrue(
+            new DriveCommand(drivetrain, 
+            () -> driverController.getLeftX() * .4, 
+            () -> driverController.getLeftY() * .4,
+            () -> driverController.getRightX() * .4));
+    }
+
+    public void configureOperatorBindings() {
+
+        Trigger zeroPositionBtn = new Trigger(() -> driverController.getBButton());
+        zeroPositionBtn.onTrue(new GoToArmPreset(arm, ArmState.ZERO));
+
+        Trigger floorPickupBtn = new Trigger(() -> driverController.getAButton());
+        floorPickupBtn.onTrue(new GoToArmPreset(arm, ArmState.FLOOR));
+
+        Trigger forwardPositionBtn = new Trigger(() -> driverController.getXButton());
+        forwardPositionBtn.onTrue(new GoToArmPreset(arm, ArmState.FORWARD));
+
+        Trigger backwardPositionBtn = new Trigger(() -> driverController.getYButton());
+        backwardPositionBtn.onTrue(new GoToArmPreset(arm, ArmState.BACKWARD));
+
     }
 }
