@@ -54,7 +54,10 @@ public final class Constants {
 
         /** Enum representing the preset arm positions */
         public enum ArmState {
-            ZERO
+            ZERO,
+            FLOOR,
+            FORWARD,
+            BACKWARD
         }
     }
 

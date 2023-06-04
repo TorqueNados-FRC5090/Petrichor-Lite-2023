@@ -51,6 +51,15 @@ public class Arm extends SubsystemBase {
             case ZERO:
                 zeroPosition();
                 break;
+            case FORWARD:
+                forwardPosition();
+                break;
+            case BACKWARD:
+                backwardPosition();
+                break;
+            case FLOOR:
+                floorPosition();
+                break;
         }
     }
 
@@ -58,6 +67,19 @@ public class Arm extends SubsystemBase {
     private void setRotationSetpoint(double setpoint) { active = true; rotationPID.setGoal(setpoint); }
 
     private void zeroPosition() {
+        setRotationSetpoint(0);
+    }
+
+    private void forwardPosition() {
+        //TODO: add setpoints
+        setRotationSetpoint(0);
+    }
+
+    private void backwardPosition() {
+        setRotationSetpoint(0);
+    }
+
+    private void floorPosition() {
         setRotationSetpoint(0);
     }
 

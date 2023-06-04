@@ -53,7 +53,7 @@ public class Robot extends TimedRobot {
     // This function is called every 20ms during teleop
     @Override
     public void teleopPeriodic() {
-        robotContainer.teleopPeriodic();
+        
     }
 
     // This function is called every 20ms while the robot is enabled
