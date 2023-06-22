@@ -74,10 +74,17 @@ public class RobotContainer {
     public XboxController getOperatorController() { return operatorController; }
     public Arm getArm() {return arm;}
 
-
+    /** Attaches driver controls to the driver controller. */
     public void configureDriverBindings() {
         /*
-         * 
+         * LS -> Drive Robot
+         * RS -> Rotates Robot
+         * StartBtn -> Toggle FieldCentric
+         * BackBtn -> Reset Heading
+         * X -> Lock Drivetrain
+         * RT -> Turn robot towards pickup station
+         * LT -> Turn robot towards player station
+         * LSBtn -> Slow Drivetrain
          */
 
 
@@ -112,18 +119,25 @@ public class RobotContainer {
             () -> driverController.getRightX() * .4));
     }
 
+    /** Attaches operator controls to the operator controller. */
     public void configureOperatorBindings() {
+        /* 
+         * B -> Zero Position
+         * A -> Floor Position
+         * X -> Forward Position
+         * Y -> Backward Position
+         */
 
-        Trigger zeroPositionBtn = new Trigger(() -> driverController.getBButton());
+        Trigger zeroPositionBtn = new Trigger(() -> operatorController.getBButton());
         zeroPositionBtn.onTrue(new GoToArmPreset(arm, ArmState.ZERO));
 
-        Trigger floorPickupBtn = new Trigger(() -> driverController.getAButton());
+        Trigger floorPickupBtn = new Trigger(() -> operatorController.getAButton());
         floorPickupBtn.onTrue(new GoToArmPreset(arm, ArmState.FLOOR));
 
-        Trigger forwardPositionBtn = new Trigger(() -> driverController.getXButton());
+        Trigger forwardPositionBtn = new Trigger(() -> operatorController.getXButton());
         forwardPositionBtn.onTrue(new GoToArmPreset(arm, ArmState.FORWARD));
 
-        Trigger backwardPositionBtn = new Trigger(() -> driverController.getYButton());
+        Trigger backwardPositionBtn = new Trigger(() -> operatorController.getYButton());
         backwardPositionBtn.onTrue(new GoToArmPreset(arm, ArmState.BACKWARD));
 
     }
