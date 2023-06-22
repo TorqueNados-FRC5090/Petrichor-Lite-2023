@@ -45,6 +45,8 @@ public final class Constants {
     /** IDs used by the Arm */
     public static final class ArmIDs {
         public static final int ROTATION_ID = 7;
+        public static final int LEFT_ID = 9;
+        public static final int RIGHT_ID = 8;
     }
 
     /* -------------- SUBSYTEM CONSTANTS -------------- */

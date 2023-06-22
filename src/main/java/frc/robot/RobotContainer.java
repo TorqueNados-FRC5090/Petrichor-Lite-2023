@@ -17,6 +17,7 @@ import frc.robot.commands.LockDrivetrain;
 import frc.robot.commands.GoToArmPreset;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Intake;
 
 // Other imports
 import edu.wpi.first.wpilibj.XboxController;
@@ -27,6 +28,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class RobotContainer {
     private final Drivetrain drivetrain = new Drivetrain();
     private final Arm arm = new Arm(ROTATION_ID);
+    private final Intake intake = new Intake(LEFT_ID, RIGHT_ID);
     private final AutonContainer auton = new AutonContainer(drivetrain, arm);
     private final XboxController driverController = new XboxController(DRIVER_PORT);
     private final XboxController operatorController = new XboxController(OPERATOR_PORT);
@@ -126,6 +128,8 @@ public class RobotContainer {
          * A -> Floor Position
          * X -> Forward Position
          * Y -> Backward Position
+         * RT -> Shoot
+         * LT -> Pickup
          */
 
         Trigger zeroPositionBtn = new Trigger(() -> operatorController.getBButton());
@@ -139,6 +143,15 @@ public class RobotContainer {
 
         Trigger backwardPositionBtn = new Trigger(() -> operatorController.getYButton());
         backwardPositionBtn.onTrue(new GoToArmPreset(arm, ArmState.BACKWARD));
+
+        Trigger shootBtn = new Trigger(() -> operatorController.getRightTriggerAxis() > .2);
+        shootBtn.onTrue(new InstantCommand(() -> intake.shoot()));
+
+        Trigger pickupBtn = new Trigger(() -> operatorController.getLeftTriggerAxis() > .2);
+        pickupBtn.onTrue(new InstantCommand(() -> intake.pickup()));
+
+        Trigger stopIntake = new Trigger(() -> operatorController.getRightTriggerAxis() <= .2  && operatorController.getLeftTriggerAxis() <= .2);
+        stopIntake.onTrue(new InstantCommand(() -> intake.stop()));
 
     }
 }
