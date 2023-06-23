@@ -32,7 +32,7 @@ public class GoToArmPreset extends CommandBase{
 
     @Override
     public boolean isFinished(){
-        return arm.rotationAtTarget();
+        return true;//arm.rotationAtTarget();
     }
 
     @Override
