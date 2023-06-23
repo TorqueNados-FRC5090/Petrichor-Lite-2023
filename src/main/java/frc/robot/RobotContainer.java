@@ -7,7 +7,6 @@ import static frc.robot.Constants.ArmIDs.*;
 // Command imports
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.ArmConstants.ArmState;
 import frc.robot.commands.AutonContainer;
@@ -29,7 +28,7 @@ public class RobotContainer {
     private final Drivetrain drivetrain = new Drivetrain();
     private final Arm arm = new Arm(ROTATION_ID);
     private final Intake intake = new Intake(LEFT_ID, RIGHT_ID);
-    private final AutonContainer auton = new AutonContainer(drivetrain, arm);
+    private final AutonContainer auton = new AutonContainer(drivetrain, arm, intake);
     private final XboxController driverController = new XboxController(DRIVER_PORT);
     private final XboxController operatorController = new XboxController(OPERATOR_PORT);
     private final SendableChooser<Command> autonChooser = new SendableChooser<Command>();
@@ -52,10 +51,13 @@ public class RobotContainer {
 
     /** Initialize the auton selector on the dashboard */
     private void initChooser() {
-        autonChooser.setDefaultOption("Do Nothing", new WaitCommand(0));
-
         SmartDashboard.putData("Auton Selector", autonChooser);
-        autonChooser.setDefaultOption("Drop High Auto", auton.dropHigh());
+        autonChooser.setDefaultOption("Shoot Forward", auton.shootForward());
+
+        autonChooser.addOption("Do Nothing", auton.doNothing());
+        autonChooser.addOption("Shoot Forward and Drive", auton.shootForwardAndDrive());
+        autonChooser.addOption("Shoot Backward", auton.shootBackward());
+        autonChooser.addOption("Shoot Backward and Drive", auton.shootBackwardAndDrive());
     }
 
 
@@ -65,9 +67,6 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        // For testing
-        //return auton.testAuto(testAutonChooser.getSelected(), 1, 1);
-
         return autonChooser.getSelected();
     }
 
