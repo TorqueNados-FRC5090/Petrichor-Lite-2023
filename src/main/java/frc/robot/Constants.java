@@ -149,9 +149,9 @@ public final class Constants {
 
   public static final class DriveConstants {
             /** Higher values make the robot drive more aggressively */
-            public static final double TRANSLATION_SLEW = 4;
+            public static final double TRANSLATION_SLEW = 2;
             /** Higher values make the robot spin more aggressively */
-            public static final double ROTATION_SLEW = 6;
+            public static final double ROTATION_SLEW = 3;
     
             /** Translation instructions closer to 0 than the deadband will be set to 0 */
             public static final double TRANSLATION_DEADBAND = .05;

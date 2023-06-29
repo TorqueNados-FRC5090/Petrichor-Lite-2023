@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -30,8 +31,10 @@ public class Arm extends SubsystemBase {
 
         rotation = new CANSparkMax(rotationId, MotorType.kBrushless);
         rotation.restoreFactoryDefaults();
-        rotationPID = new ProfiledPIDController(.1, 0, 0,
-            new TrapezoidProfile.Constraints(.25, .5));
+        rotation.setInverted(true);
+        rotation.setIdleMode(IdleMode.kBrake);
+        rotationPID = new ProfiledPIDController(.25, 0, 0,
+            new TrapezoidProfile.Constraints(150, 75));
         rotationPID.setTolerance(1);
     }
 
@@ -71,16 +74,15 @@ public class Arm extends SubsystemBase {
     }
 
     private void forwardPosition() {
-        //TODO: add setpoints
-        setRotationSetpoint(0);
+        setRotationSetpoint(20);
     }
 
     private void backwardPosition() {
-        setRotationSetpoint(0);
+        setRotationSetpoint(-34);
     }
 
     private void floorPosition() {
-        setRotationSetpoint(0);
+        setRotationSetpoint(61);
     }
 
     @Override // Called every 20ms
